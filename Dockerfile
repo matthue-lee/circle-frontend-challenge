@@ -6,11 +6,18 @@ WORKDIR /app
 # Copy package.json and package-lock.json
 COPY package*.json ./
 
+RUN apt-get update -y && apt-get install -y openssl
+
 # Install dependencies, including devDependencies (to include TypeScript)
 RUN npm ci --include=dev
 
 # Copy the rest of the application files
 COPY . .
+# Copy Prisma files
+COPY prisma ./prisma
+
+# Generate Prisma Client
+RUN npx prisma generate
 
 # Build the application (transpile TypeScript to JavaScript)
 RUN npm run build
@@ -28,4 +35,4 @@ COPY --from=base /app/package*.json ./
 RUN npm ci --omit=dev
 
 # Start the application
-CMD ["node", "dist/index.js"]
+CMD ["sh", "-c", "npx prisma generate && npx prisma migrate deploy && node dist/src/index.js"]

@@ -5,7 +5,7 @@ import ErrorHandler from './utils/ErrorHandler'
 import cors from 'cors'
 
 const app = express()
-const port = 8000
+const port = Number(process.env.PORT) || 3000
 
 app.use(express.json())
 app.use(cors())
@@ -18,6 +18,8 @@ app.use((_req, _res, next) => {
 
 app.use(errorHandler)
 
-app.listen(port, () => {
-    console.log(`🚀 Example app listening at http://localhost:${port}`)
-})
+app.listen(port, '0.0.0.0', () => {
+    console.log(`🚀 Example app listening at http://localhost:${port}`);
+});
+
+module.exports = app;
