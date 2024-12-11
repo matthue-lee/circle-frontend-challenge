@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from 'express'
 import prisma from '../db/client'
 import ErrorHandler from '../utils/ErrorHandler'
+import { PrismaClient, Prisma } from '@prisma/client';
+
 
 export const getAllBooks = async (_: Request, res: Response) => {
     const books = await prisma.book.findMany()
@@ -25,7 +27,7 @@ export const getUniqueBook = async (
 }
 
 const purchase = async (id: number) => {
-    return await prisma.$transaction(async (tx) => {
+    return await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
         try {
             const book = await tx.book.update({
                 where: { id },
