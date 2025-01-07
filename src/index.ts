@@ -1,27 +1,28 @@
-import express from 'express'
-import booksRouter from './router/booksRouter'
-import { errorHandler } from './middleware/errorHandler'
-import ErrorHandler from './utils/ErrorHandler'
-import cors from 'cors'
+import express from 'express';
+import booksRouter from './router/booksRouter';
+import { errorHandler } from './middleware/errorHandler';
+import ErrorHandler from './utils/ErrorHandler';
+import cors from 'cors';
 import dotenv from 'dotenv';
-
 
 dotenv.config();
 
-const app = express()
-const port = 8000
+const app = express();
 
-app.use(express.json())
-app.use(cors())
+// Use the PORT environment variable if available, otherwise default to 8000
+const port = process.env.PORT || 8000;
 
-app.use('/books', booksRouter)
+app.use(express.json());
+app.use(cors());
+
+app.use('/books', booksRouter);
 
 app.use((_req, _res, next) => {
-    next(new ErrorHandler('Route not found', 404))
-})
+    next(new ErrorHandler('Route not found', 404));
+});
 
-app.use(errorHandler)
+app.use(errorHandler);
 
 app.listen(port, () => {
-    console.log(`🚀 Example app listening at http://localhost:${port}`)
-})
+    console.log(`🚀 Example app listening at http://localhost:${port}`);
+});
