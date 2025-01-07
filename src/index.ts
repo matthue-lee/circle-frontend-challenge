@@ -3,6 +3,10 @@ import booksRouter from './router/booksRouter'
 import { errorHandler } from './middleware/errorHandler'
 import ErrorHandler from './utils/ErrorHandler'
 import cors from 'cors'
+import dotenv from 'dotenv';
+
+
+dotenv.config();
 
 const app = express()
 const port = 8000
