@@ -14,7 +14,7 @@ const port = process.env.PORT || 8000;
 
 app.use(express.json());
 app.use(cors({
-    origin: ['http://localhost:5173', 'https://circle-pos-front.vercel.app/'], // Replace with your actual frontend URL
+    origin: ['http://localhost:5173', 'https://circle-pos-front.vercel.app/', 'https://circle-pos-front-m00lxf9ox-matthew-s-projects-64dfcdea.vercel.app'], // Replace with your actual frontend URL
 }));
 
 app.use('/books', booksRouter);
